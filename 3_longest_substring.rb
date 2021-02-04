@@ -9,7 +9,7 @@ def length_of_longest_substring(s)
       substr << c
       longest_substr_count = substr.length if substr.length > longest_substr_count
     else
-      substr = c
+      substr = substr.slice((substr.rindex(c)+1)..) + c
     end
   end
 
