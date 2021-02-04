@@ -9,7 +9,7 @@ def length_of_longest_substring(s)
       substr << c
       longest_substr_count = substr.length if substr.length > longest_substr_count
     else
-      substr = ''
+      substr = c
     end
   end
 
