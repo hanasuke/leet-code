@@ -5,30 +5,29 @@ def longest_palindrome(s)
   array = s.split('')
   len = s.length
 
+  return s if s == s.reverse
+
   array.each_with_index do |_, idx|
-    if len == 1
-      longest_substr = array.join
-      break
-    end
     carry = 0
+    next if longest_substr.length > idx
+
+    # same char check
     0.upto(idx) do |r|
-      break unless array[idx-r..idx].uniq.length == 1
       next if longest_substr.length > idx + r
+      break unless array[idx-r..idx].uniq.length == 1
       carry = r
       if array[idx-r..idx].length > longest_substr.length
         longest_substr = array[idx-r..idx].join
       end
     end
 
-    1.upto(len-idx) do  |r|
+    (longest_substr.length/2).upto(len-idx) do  |r|
       break if (idx - r - carry < 0) || (idx + r >= len)
       next if longest_substr.length > idx + r
-      if palindrome?(array[idx-r-carry..idx+r].join)
-        if array[idx-r-carry..idx+r].length > longest_substr.length
-          longest_substr = array[idx-r-carry..idx+r].join
-        end
-      else
-        break
+
+      break unless palindrome?(array[idx-r-carry..idx+r].join)
+      if array[idx-r-carry..idx+r].length > longest_substr.length
+        longest_substr = array[idx-r-carry..idx+r].join
       end
     end
   end
@@ -37,24 +36,5 @@ def longest_palindrome(s)
 end
 
 def palindrome?(substr)
-  return true if substr.length == 1
-
-  array = substr.split('')
-  len = array.length
-  mid = len / 2
-  if len.odd?
-    array.each_with_index do |_, idx|
-      break if idx == mid
-
-      return false unless array[idx] == array[-1-idx]
-    end
-  else
-    array.each_with_index do |s, idx|
-      break if mid < idx
-
-      return false unless array[idx] == array[-1-idx]
-    end
-  end
-
-  return true
+  substr == substr.reverse
 end
