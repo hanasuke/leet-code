@@ -4,13 +4,12 @@ def longest_palindrome(s)
   array = s.split('')
   len = s.length
 
-  return s if s == s.reverse
+  return s if palindrome?(s)
   longest_substr = array[0]
 
   array.each_with_index do |_, idx|
     carry = 0
     flag = true
-    next if longest_substr.length > idx
 
     1.upto(idx) do  |r|
       break if (idx - r < 0)
