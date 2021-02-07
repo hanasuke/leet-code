@@ -1,4 +1,3 @@
-# @param {String} s
 # @return {String}
 def longest_palindrome(s)
   longest_substr = ''
@@ -11,22 +10,21 @@ def longest_palindrome(s)
     carry = 0
     next if longest_substr.length > idx
 
-    # same char check
-    longest_substr.length.upto(idx) do |r|
-      break unless array[idx-r..idx] == array[idx-r..idx].reverse
-      carry = r
-      if array[idx-r..idx].length > longest_substr.length
-        longest_substr = array[idx-r..idx].join
+    1.upto(idx) do  |r|
+      break if (idx - r < 0)
+      if array[idx-r] == array[idx]
+        carry += 1
+        if array[idx-r..idx].length > longest_substr.length
+          longest_substr = array[idx-r..idx].join
+        end
+        next
       end
-    end
 
-    1.upto(len-idx) do  |r|
-      break if (idx - r - carry < 0) || (idx + r >= len)
-      next if longest_substr.length > idx + r
+      next if longest_substr.length > idx + r + carry
 
-      break unless palindrome?(array[idx-r-carry..idx+r].join)
-      if array[idx-r-carry..idx+r].length > longest_substr.length
-        longest_substr = array[idx-r-carry..idx+r].join
+      break unless palindrome?(array[idx-r..idx+r-carry].join)
+      if array[idx-r..idx+r-carry].length > longest_substr.length
+        longest_substr = array[idx-r..idx+r-carry].join
       end
     end
   end
