@@ -12,9 +12,8 @@ def longest_palindrome(s)
     next if longest_substr.length > idx
 
     # same char check
-    0.upto(idx) do |r|
-      next if longest_substr.length > idx + r
-      break unless array[idx-r..idx].uniq.length == 1
+    longest_substr.length.upto(idx) do |r|
+      break unless array[idx-r..idx] == array[idx-r..idx].reverse
       carry = r
       if array[idx-r..idx].length > longest_substr.length
         longest_substr = array[idx-r..idx].join
