@@ -3,11 +3,23 @@
 def longest_palindrome(s)
   longest_substr = ''
   array = s.split('')
+  len = s.length
 
   array.each_with_index do |_, idx|
-    array.length.times do |len|
-      if palindrome?(array[idx..len].join())
-        longest_substr = array[idx..len].join() if array[idx..len].length > longest_substr.length
+    0.upto(len-idx) do  |r|
+      break if (idx - r < 0)
+      if palindrome?(array[idx-r..idx].join)
+        if array[idx-r..idx].length > longest_substr.length
+          longest_substr = array[idx-r..idx].join
+        end
+      end
+
+      if palindrome?(array[idx-r..idx+r].join)
+        if array[idx-r..idx+r].length > longest_substr.length
+          longest_substr = array[idx-r..idx+r].join
+        end
+      else
+        break
       end
     end
   end
@@ -16,6 +28,8 @@ def longest_palindrome(s)
 end
 
 def palindrome?(substr)
+  return true if substr.length == 1
+
   array = substr.split('')
   len = array.length
   mid = len / 2
