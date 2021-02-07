@@ -10,15 +10,13 @@ def longest_palindrome(s)
       longest_substr = array.join
       break
     end
-
-    if palindrome?(array[idx-1..idx].join)
-      if array[idx-1..idx].length > longest_substr.length
-        longest_substr = array[idx-1..idx].join
+    carry = 0
+    0.upto(idx) do |r|
+      break unless array[idx-r..idx].uniq.length == 1
+      carry = r
+      if array[idx-r..idx].length > longest_substr.length
+        longest_substr = array[idx-r..idx].join
       end
-      carry = 1
-    else
-      longest_substr = array[idx] if longest_substr.length < 1
-      carry = 0
     end
 
     1.upto(len-idx) do  |r|
