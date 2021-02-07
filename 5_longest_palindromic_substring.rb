@@ -9,11 +9,12 @@ def longest_palindrome(s)
 
   array.each_with_index do |_, idx|
     carry = 0
+    flag = true
     next if longest_substr.length > idx
 
     1.upto(idx) do  |r|
       break if (idx - r < 0)
-      if array[idx-r] == array[idx]
+      if array[idx-r] == array[idx] && flag
         carry += 1
         if array[idx-r..idx].length > longest_substr.length
           longest_substr = array[idx-r..idx].join
@@ -21,6 +22,7 @@ def longest_palindrome(s)
         next
       end
 
+      flag = false
       next if longest_substr.length > idx + r + carry
 
       break unless palindrome?(array[idx-r..idx+r-carry].join)
