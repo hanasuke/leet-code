@@ -17,6 +17,7 @@ def longest_palindrome(s)
       end
       carry = 1
     else
+      longest_substr = array[idx] if longest_substr.length < 1
       carry = 0
     end
 
