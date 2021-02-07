@@ -6,20 +6,22 @@ def longest_palindrome(s)
   len = s.length
 
   array.each_with_index do |_, idx|
-    0.upto(len-idx) do  |r|
-      carry = if len > 2
-                array[idx] == array[idx-1] ? 1 : 0
-              else
-                0
-              end
+    if len == 1
+      longest_substr = array.join
+      break
+    end
 
-      break if (idx - r - carry < 0) || (idx + r >= len)
-      if palindrome?(array[idx-r-carry..idx].join)
-        if array[idx-r-carry..idx].length > longest_substr.length
-          longest_substr = array[idx-r-carry..idx].join
-        end
+    if palindrome?(array[idx-1..idx].join)
+      if array[idx-1..idx].length > longest_substr.length
+        longest_substr = array[idx-1..idx].join
       end
+      carry = 1
+    else
+      carry = 0
+    end
 
+    1.upto(len-idx) do  |r|
+      break if (idx - r - carry < 0) || (idx + r >= len)
       if palindrome?(array[idx-r-carry..idx+r].join)
         if array[idx-r-carry..idx+r].length > longest_substr.length
           longest_substr = array[idx-r-carry..idx+r].join
