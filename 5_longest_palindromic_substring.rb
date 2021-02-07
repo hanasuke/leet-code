@@ -21,7 +21,7 @@ def longest_palindrome(s)
       end
     end
 
-    (longest_substr.length/2).upto(len-idx) do  |r|
+    1.upto(len-idx) do  |r|
       break if (idx - r - carry < 0) || (idx + r >= len)
       next if longest_substr.length > idx + r
 
