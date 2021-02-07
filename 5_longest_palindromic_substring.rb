@@ -7,7 +7,11 @@ def longest_palindrome(s)
 
   array.each_with_index do |_, idx|
     0.upto(len-idx) do  |r|
-      carry = array[idx] == array[idx-1] ? 1 : 0
+      carry = if len > 2
+                array[idx] == array[idx-1] ? 1 : 0
+              else
+                0
+              end
 
       break if (idx - r - carry < 0) || (idx + r >= len)
       if palindrome?(array[idx-r-carry..idx].join)
