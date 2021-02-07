@@ -5,6 +5,7 @@ def longest_palindrome(s)
   len = s.length
 
   return s if s == s.reverse
+  longest_substr = array[0]
 
   array.each_with_index do |_, idx|
     carry = 0
