@@ -7,16 +7,18 @@ def longest_palindrome(s)
 
   array.each_with_index do |_, idx|
     0.upto(len-idx) do  |r|
-      break if (idx - r < 0)
-      if palindrome?(array[idx-r..idx].join)
-        if array[idx-r..idx].length > longest_substr.length
-          longest_substr = array[idx-r..idx].join
+      carry = array[idx] == array[idx-1] ? 1 : 0
+
+      break if (idx - r - carry < 0) || (idx + r >= len)
+      if palindrome?(array[idx-r-carry..idx].join)
+        if array[idx-r-carry..idx].length > longest_substr.length
+          longest_substr = array[idx-r-carry..idx].join
         end
       end
 
-      if palindrome?(array[idx-r..idx+r].join)
-        if array[idx-r..idx+r].length > longest_substr.length
-          longest_substr = array[idx-r..idx+r].join
+      if palindrome?(array[idx-r-carry..idx+r].join)
+        if array[idx-r-carry..idx+r].length > longest_substr.length
+          longest_substr = array[idx-r-carry..idx+r].join
         end
       else
         break
