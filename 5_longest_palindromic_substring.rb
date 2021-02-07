@@ -2,57 +2,20 @@
 # @return {String}
 def longest_palindrome(s)
   longest_substr = ''
-  array = s.split('')
+  str_array = s.split('')
+  rev_str_array = str_array.reverse
   len = s.length
 
-  array.each_with_index do |_, idx|
-    if len == 1
-      longest_substr = array.join
-      break
-    end
-    carry = 0
-    0.upto(idx) do |r|
-      break unless array[idx-r..idx].uniq.length == 1
-      carry = r
-      if array[idx-r..idx].length > longest_substr.length
-        longest_substr = array[idx-r..idx].join
-      end
+  carry = 0
+
+  str_array.each_with_index do |_, idx|
+    idx.upto(len-1) do |r|
+      next if str_array[idx..r] != str_array[idx..r].reverse
+      longest_substr = str_array[idx..r].join if str_array[idx..r].length > longest_substr.length
     end
 
-    1.upto(len-idx) do  |r|
-      break if (idx - r - carry < 0) || (idx + r >= len)
-      if palindrome?(array[idx-r-carry..idx+r].join)
-        if array[idx-r-carry..idx+r].length > longest_substr.length
-          longest_substr = array[idx-r-carry..idx+r].join
-        end
-      else
-        break
-      end
-    end
+    break if (len - idx) < longest_substr.length
   end
 
   return longest_substr
-end
-
-def palindrome?(substr)
-  return true if substr.length == 1
-
-  array = substr.split('')
-  len = array.length
-  mid = len / 2
-  if len.odd?
-    array.each_with_index do |_, idx|
-      break if idx == mid
-
-      return false unless array[idx] == array[-1-idx]
-    end
-  else
-    array.each_with_index do |s, idx|
-      break if mid < idx
-
-      return false unless array[idx] == array[-1-idx]
-    end
-  end
-
-  return true
 end
