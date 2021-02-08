@@ -10,8 +10,8 @@ def my_atoi(s)
   end
 
   s.strip.each_char do |c|
+    break if (c == '-' || c == '+') && num_flag
     next if c == '+'
-    break if c == '-' && num_flag
     break if ! /[-\d]/.match?(c) && num_flag
 
     if c == '-'
