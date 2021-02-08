@@ -5,12 +5,13 @@ def my_atoi(s)
   num_flag = false
   cond = 1 # default: positive
 
-  unless /^\-?[\d]+/.match? s.strip[0..1]
+  unless /[-+]?\d/.match? s.strip[0..1]
     return 0
   end
 
   s.strip.each_char do |c|
-    break if !/[-\d]/.match?(c) && num_flag
+    next if c == '+'
+    break if ! /[-\d]/.match?(c) && num_flag
 
     if c == '-'
       cond = -1
