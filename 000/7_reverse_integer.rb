@@ -1,10 +1,10 @@
 # @param {Integer} x
 # @return {Integer}
 def reverse(x)
-  code = x >= 0 ? 1 : -1
+  code = x >= 0 ? '' : '-'
 
-  rev = (x * code).to_s.reverse.to_i*code
-  if rev > 2**31 - 1 || rev < -1 * 2**31
+  rev = (code + x.to_s.reverse).to_i
+  if rev.bit_length > 31
     return 0
   else
     rev
