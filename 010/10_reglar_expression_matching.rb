@@ -2,5 +2,8 @@
 # @param {String} p
 # @return {Boolean}
 def is_match(s, p)
-  %r(#{p}).match(s).to_a[0] == s
+  match =  %r(#{p}).match(s)
+  return false if match.nil?
+
+  match.to_s == s
 end
