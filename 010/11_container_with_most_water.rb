@@ -5,6 +5,7 @@ def max_area(height)
   max_area_height = 0
   max_area_width = 0
   height.each_with_index do |h, w1|
+    next if height[w1] < max_area_height && max_area_width > (height.length - w1)
     (height.length-1).downto(w1) do |w2|
       next if height[w1] < max_area_height && max_area_width > (w2-w1)
       area = (height[w1] > height[w2]) ? height[w2] * (w2 - w1) : height[w1] * (w2-w1)
